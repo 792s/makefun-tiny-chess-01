@@ -5,7 +5,7 @@ QK=(-11,-9,9,11,-10,-1,1,10)
 DG=QK[:4]
 OG=QK[4:]
 DS={'N':NK,'B':DG,'R':OG,'Q':QK,'K':QK}
-PS=['PPPPUZZ<UKFPPPPdUUZiZZdn~~~~PPPP','!(22(<PU2UZ_2P_d2U_d2PZ_(<PP!(22','<FFFFUPPFZZZFPZZFUUZFPUZFPPP<FFF','PPPUKPPPKPPPKPPPKPPPKPPPUZZZPPPP','P'*32,'dnZPddPPF<<<<22(2((!2((!2((!2((!']
+PS=['PPPPUZZ<UKFPPPPdUUZiZZdn~~~~PPPP','!(22(<PU2UZ_2P_d2U_d2PZ_(<PP!(22','P'*32,'P'*32,'P'*32,'dnZPddPPF<<<<22(2((!2((!2((!2((!']
 P=[[ord(s[(i//8)*4+min(i%8,7-i%8)])-80 for i in range(64)] for s in PS]
 CK=[15]*120
 for a,q in((98,14),(91,13),(28,11),(21,7)):CK[a]=q
@@ -13,6 +13,7 @@ RV=lambda c:(c&1)*8+(c&2)*2+(c&4)//2+(c&8)//8
 S=lambda s,x,ch:s[:x]+ch+s[x+1:]
 Z='PNBRQKpnbrqk'
 K=[0]*64
+H={}
 def F(f):
  global b,c,e,RT
  b=list(' '*20+' ........ '*8+' '*20)
@@ -31,6 +32,7 @@ def F(f):
   b=b[::-1].swapcase()
   c=RV(c)
   e=119-e if e!=-1 else -1
+ H[b]=H.get(b,0)+1
 def A(j):
  for ds,pc in((NK,'n'),(QK,'k'),((-11,-9),'p')):
   for d in ds:
@@ -119,6 +121,7 @@ def R(d,a,be,pl):
  global ND,b,c,e
  ND+=1
  if ND>=12e4:raise BO
+ if H.get(b,0)>1:return 0
  if d<=0:
   if pl>16:return E()
   st=E()
