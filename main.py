@@ -12,6 +12,7 @@ for a,q in((98,14),(91,13),(28,11),(21,7)):CK[a]=q
 RV=lambda c:(c&1)*8+(c&2)*2+(c&4)//2+(c&8)//8
 S=lambda s,x,ch:s[:x]+ch+s[x+1:]
 Z='PNBRQK'
+K=[0]*64
 def F(f):
  global b,c,e,RT
  b=list(' '*20+' ........ '*8+' '*20)
@@ -31,8 +32,7 @@ def F(f):
   c=RV(c)
   e=119-e if e!=-1 else -1
 def A(j):
- if b[j-11]=='p' or b[j-9]=='p':return 1
- for ds,pc in((NK,'n'),(QK,'k')):
+ for ds,pc in((NK,'n'),(QK,'k'),((-11,-9),'p')):
   for d in ds:
    if b[j+d]==pc:return 1
  for ds,pc in((DG,'b'),(OG,'r')):
@@ -60,7 +60,7 @@ def G(cp):
     elif j==e:m+=[i*128+j]
    for j in cd:
     if j<30:
-     for z in(81,82,66,78):m+=[i*128+j+z*16384]
+     for z in'QRBN':m+=[i*128+j+ord(z)*16384]
     else:m+=[i*128+j]
   else:
    for d in DS[p]:
@@ -108,11 +108,11 @@ def E():
   x=V[t]+P[t][i]
   r+=x if p<'a' else -x
  return r
-def O(ms):
+def O(ms,pl):
  def sc(m):
   if m>>14:return 9500
   q=b[m&127]
-  return 10000+V[Z.index(q.upper())]*10-V[Z.index(b[(m>>7)&127].upper())]//10 if q!='.' else 0
+  return 10000+V[Z.index(q.upper())]*10-V[Z.index(b[(m>>7)&127].upper())]//10 if q!='.' else 9000 if m==K[pl] else 0
  return sorted(ms,key=sc,reverse=True)
 class BO(Exception):pass
 def R(d,a,be,pl):
@@ -125,14 +125,14 @@ def R(d,a,be,pl):
   if st>=be:return be
   if st>a:a=st
  lg=0
- for m in O(G(d<=0)):
+ for m in O(G(d<=0),pl):
   o=M(m)
   if o:
    lg+=1
    sc=-R(max(d-1,0),-be,-a,pl+1)
    b,c,e=o
    if sc>a:a=sc
-   if a>=be:return be
+   if a>=be:K[pl]=m;return be
  if d>0 and not lg:return -9**9+pl if A(b.index('K')) else 0
  return a
 def T():
@@ -149,21 +149,20 @@ def T():
   for d in range(1,40):
    al=-9**9
    ns=[]
-   ib=sc[0][1]
    for _,m in sc:
     o=M(m)
     v=-R(d-1,-9**9,-al,1)
     b,c,e=o
     ns+=[(-v,m)]
-    if v>al:al=v;ib=m
+    if v>al:al=v
    sc=sorted(ns)
-   bs=ib
+   bs=sc[0][1]
  except BO:pass
  return bs
 def U(m):
  i=(m>>7)&127;j=m&127;pr=m>>14
  if RT:i,j=119-i,119-j
- return '%c%c%c%c'%(i%10+96,58-i//10,j%10+96,58-j//10)+(chr(pr).lower() if pr else '')
+ return '%c%c%c%c'%(i%10+96,58-i//10,j%10+96,58-j//10)+(chr(pr+32) if pr else '')
 def p(a,d):
  return json.load(urllib.request.urlopen(os.environ['MAKEFUN_ENV_URL']+a,json.dumps(d).encode()))
 while 1:
