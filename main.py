@@ -11,7 +11,7 @@ CK=[15]*120
 for a,q in((98,14),(91,13),(28,11),(21,7)):CK[a]=q
 RV=lambda c:(c&1)*8+(c&2)*2+(c&4)//2+(c&8)//8
 S=lambda s,x,ch:s[:x]+ch+s[x+1:]
-Z='PNBRQK'
+Z='PNBRQKpnbrqk'
 K=[0]*64
 def F(f):
  global b,c,e,RT
@@ -102,7 +102,7 @@ def E():
  r=0
  for j,p in enumerate(b):
   if p<'A':continue
-  t=Z.index(p.upper())
+  t=Z.index(p)%6
   i=71-j//10*8+j%10
   if p>='a':i^=56
   x=V[t]+P[t][i]
@@ -112,13 +112,13 @@ def O(ms,pl):
  def sc(m):
   if m>>14:return 9500
   q=b[m&127]
-  return 10000+V[Z.index(q.upper())]*10-V[Z.index(b[(m>>7)&127].upper())]//10 if q!='.' else 9000 if m==K[pl] else 0
+  return 10000+V[Z.index(q)%6]*10-V[Z.index(b[(m>>7)&127])%6]//10 if q!='.' else 9000 if m==K[pl] else 0
  return sorted(ms,key=sc,reverse=True)
 class BO(Exception):pass
 def R(d,a,be,pl):
  global ND,b,c,e
  ND+=1
- if ND>=8e4:raise BO
+ if ND>=12e4:raise BO
  if d<=0:
   if pl>16:return E()
   st=E()
