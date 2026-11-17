@@ -119,7 +119,7 @@ class BO(Exception):pass
 def R(d,a,be,pl):
  global ND,b,c,e
  ND+=1
- if ND>=20e4:raise BO
+ if ND>=12e4:raise BO
  if H.get(b,0)>1:return 50
  if d<=0:
   if pl>16:return E()
