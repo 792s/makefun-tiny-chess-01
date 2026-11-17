@@ -5,7 +5,7 @@ QK=(-11,-9,9,11,-10,-1,1,10)
 DG=QK[:4]
 OG=QK[4:]
 DS={'N':NK,'B':DG,'R':OG,'Q':QK,'K':QK}
-PS=['PPPPUZZ<UKFPPPPdUUZiZZdn~~~~PPPP','!(22(<PU2UZ_2P_d2U_d2PZ_(<PP!(22','<FFFFUPPFZZZFPZZFUUZFPUZFPPP<FFF','PPPUKPPPKPPPKPPPKPPPKPPPUZZZPPPP','P'*32,'dnZPddPPF<<<<22(2((!2((!2((!2((!']
+PS=['PPPPq}dpNRYZKTRWGONTGOOMDPIHPPPP','!2E@8Bh]@d]fMVVbLQUTHMTSF>LO-I=E','FQ5DGUJLK]^]ORVaNTTYPUUUQUUPEOKI','[^[aY[ceNVY]HLRYDGLPAHKJAKIMJLPV','P'*32,':XUKZPINMXQKJILG@PGCKKIAPRM;K]T>']
 P=[[ord(s[(i//8)*4+min(i%8,7-i%8)])-80 for i in range(64)] for s in PS]
 CK={98:14,91:13,28:11,21:7}
 RV=lambda c:(c&1)*8+(c&2)*2+(c&4)//2+(c&8)//8
@@ -119,7 +119,7 @@ class BO(Exception):pass
 def R(d,a,be,pl):
  global ND,b,c,e
  ND+=1
- if ND>=12e4:raise BO
+ if ND>=15e4:raise BO
  if H.get(b,0)>1:return 50
  if d<=0:
   if pl>16:return E()
