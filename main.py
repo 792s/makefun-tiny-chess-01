@@ -1,11 +1,11 @@
-import json,os,urllib.request as u
+import json as j,os,urllib.request as u
 V=[100,320,330,500,900,20000]
 NK=(-21,-19,-12,-8,8,12,19,21)
 QK=(-11,-9,9,11,-10,-1,1,10)
 DG=QK[:4]
 OG=QK[4:]
 DS={'N':NK,'B':DG,'R':OG,'Q':QK,'K':QK}
-PS=['PPPPq}dpNRYZKTRWGONTGOOMDPIHPPPP','!2E@8Bh]@d]fMVVbLQUTHMTSF>LO-I=E','FQ5DGUJLK]^]ORVaNTTYPUUUQUUPEOKI','[^[aY[ceNVY]HLRYDGLPAHKJAKIMJLPV','P'*32,':XUKZPINMXQKJILG@PGCKKIAPRM;K]T>']
+PS=['PPPPUZZ<UKFPPPPdUUZiZZdn~~~~PPPP','!(22(<PU2UZ_2P_d2U_d2PZ_(<PP!(22','<FFFFUPPFZZZFPZZFUUZFPUZFPPP<FFF','PPPUKPPPKPPPKPPPKPPPKPPPUZZZPPPP','P'*32,'dnZPddPPF<<<<22(2((!2((!2((!2((!']
 P=[[ord(s[(i//8)*4+min(i%8,7-i%8)])-80 for i in range(64)] for s in PS]
 CK={98:14,91:13,28:11,21:7}
 RV=lambda c:(c&1)*8+(c&2)*2+(c&4)//2+(c&8)//8
@@ -50,7 +50,7 @@ def G(cp):
   if not p.isupper():continue
   if p=='P':
    cd=[]
-   if not cp:
+   if cp==0:
     j=i-10
     if b[j]=='.':
      cd+=[j]
@@ -68,11 +68,11 @@ def G(cp):
     j=i+d
     while 1:
      q=b[j]
-     if q==' ' or q.isupper():break
-     if q!='.' or not cp:m+=[i*128+j]
-     if p in 'NK' or q!='.':break
+     if q==' 'or q.isupper():break
+     if q!='.'or cp==0:m+=[i*128+j]
+     if p in'NK'or q!='.':break
      j+=d
-   if p=='K' and not cp:
+   if p=='K'and cp==0:
     for kt,bt in((i+2,1),(i-2,2)):
      rf=98 if kt>i else 91
      if c&bt and b[rf]=='R' and b[min(i,rf)+1:max(i,rf)] in('..','...') and all(not A(x) for x in(i,(i+kt)//2,kt)):m+=[i*128+kt]
@@ -83,9 +83,9 @@ def M(m):
  o=(b,c,e)
  p=b[i]
  n=S(b,i,'.')
- n=S(n,j,chr(pr) if pr else p)
- if p=='P' and j==e:n=S(n,j+10,'.')
- if p=='K' and abs(j-i)==2:
+ n=S(n,j,chr(pr)if pr else p)
+ if p=='P'and j==e:n=S(n,j+10,'.')
+ if p=='K'and abs(j-i)==2:
   rf,rt=(98,j-1) if j>i else(91,j+1)
   n=S(S(n,rt,'R'),rf,'.')
  b=n
@@ -94,7 +94,7 @@ def M(m):
   return 0
  k=c&CK.get(i,15)&CK.get(j,15)
  if p=='K':k&=12
- f=(i+j)//2 if p=='P' and abs(j-i)==20 else -1
+ f=(i+j)//2 if p=='P'and abs(j-i)==20 else -1
  b=b[::-1].swapcase()
  c=RV(k)
  e=119-f if f!=-1 else -1
@@ -108,7 +108,7 @@ def E():
   if p>'Z':i^=56
   x=V[t]+P[t][i]
   r+=x if p<'a' else -x
- return r
+ return r+10
 def O(ms,pl):
  def sc(m):
   if m>>14:return 9500
@@ -135,7 +135,7 @@ def R(d,a,be,pl):
    b,c,e=o
    if sc>a:a=sc
    if a>=be:K[pl]=m;return be
- if d>0 and not lg:return -1e9+pl if A(b.index('K')) else 0
+ if d>0 and lg==0:return -1e9+pl if A(b.index('K')) else 0
  return a
 def T():
  global ND,b,c,e
@@ -167,7 +167,7 @@ def U(m):
  if RT:i,j=119-i,119-j
  return '%c'*4%(i%10+96,58-i//10,j%10+96,58-j//10)+(chr(pr+32)if pr else'')
 def p(a,d):
- return json.load(u.urlopen(os.getenv('MAKEFUN_ENV_URL')+a,json.dumps(d).encode()))
+ return j.load(u.urlopen(os.getenv('MAKEFUN_ENV_URL')+a,j.dumps(d).encode()))
 while 1:
  g=p('/game',{})
  if g['status']=='done':break
