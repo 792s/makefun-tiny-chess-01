@@ -118,7 +118,7 @@ class BO(Exception):pass
 def R(d,a,be,pl):
  global ND,b,c,e
  ND+=1
- if ND>=80000:raise BO
+ if ND>=8e4:raise BO
  if d<=0:
   if pl>16:return E()
   st=E()
@@ -149,20 +149,21 @@ def T():
   for d in range(1,40):
    al=-9**9
    ns=[]
+   ib=sc[0][1]
    for _,m in sc:
     o=M(m)
     v=-R(d-1,-9**9,-al,1)
     b,c,e=o
     ns+=[(-v,m)]
-    if v>al:al=v
+    if v>al:al=v;ib=m
    sc=sorted(ns)
-   bs=sc[0][1]
+   bs=ib
  except BO:pass
  return bs
 def U(m):
  i=(m>>7)&127;j=m&127;pr=m>>14
  if RT:i,j=119-i,119-j
- return '%c%c%c%c'%(i%10+96,58-i//10,j%10+96,58-j//10)+(chr(pr+32) if pr else '')
+ return '%c'*4%(i%10+96,58-i//10,j%10+96,58-j//10)+(chr(pr+32) if pr else '')
 def p(a,d):
  return json.load(urllib.request.urlopen(os.environ['MAKEFUN_ENV_URL']+a,json.dumps(d).encode()))
 while 1:
