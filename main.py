@@ -11,14 +11,7 @@ CK=[15]*120
 for a,q in((98,14),(91,13),(28,11),(21,7)):CK[a]=q
 RV=lambda c:(c&1)*8+(c&2)*2+(c&4)//2+(c&8)//8
 S=lambda s,x,ch:s[:x]+ch+s[x+1:]
-b=' '*120
-c=0
-e=-1
-RT=0
-ND=0
-BG=60000
-MT=100000
-EU=os.environ['MAKEFUN_ENV_URL']
+Z='PNBRQK'
 def F(f):
  global b,c,e,RT
  b=list(' '*20+' ........ '*8+' '*20)
@@ -109,7 +102,7 @@ def E():
  r=0
  for j,p in enumerate(b):
   if p<'A':continue
-  t='PNBRQK'.index(p.upper())
+  t=Z.index(p.upper())
   i=71-j//10*8+j%10
   if p>='a':i^=56
   x=V[t]+P[t][i]
@@ -119,14 +112,15 @@ def O(ms):
  def sc(m):
   if m>>14:return 9500
   q=b[m&127]
-  return 10000+V['PNBRQK'.index(q.upper())]*10 if q!='.' else 0
+  return 10000+V[Z.index(q.upper())]*10-V[Z.index(b[(m>>7)&127].upper())]//10 if q!='.' else 0
  return sorted(ms,key=sc,reverse=True)
 class BO(Exception):pass
 def R(d,a,be,pl):
  global ND,b,c,e
  ND+=1
- if ND>=BG:raise BO
+ if ND>=80000:raise BO
  if d<=0:
+  if pl>16:return E()
   st=E()
   if st>=be:return be
   if st>a:a=st
@@ -139,7 +133,7 @@ def R(d,a,be,pl):
    b,c,e=o
    if sc>a:a=sc
    if a>=be:return be
- if d>0 and not lg:return -MT+pl if A(b.index('K')) else 0
+ if d>0 and not lg:return -9**9+pl if A(b.index('K')) else 0
  return a
 def T():
  global ND,b,c,e
@@ -153,12 +147,12 @@ def T():
  bs=lg[0]
  try:
   for d in range(1,40):
-   al=-MT
+   al=-9**9
    ns=[]
    ib=sc[0][1]
    for _,m in sc:
     o=M(m)
-    v=-R(d-1,-MT,-al,1)
+    v=-R(d-1,-9**9,-al,1)
     b,c,e=o
     ns+=[(-v,m)]
     if v>al:al=v;ib=m
@@ -169,9 +163,9 @@ def T():
 def U(m):
  i=(m>>7)&127;j=m&127;pr=m>>14
  if RT:i,j=119-i,119-j
- return chr(96+i%10)+chr(58-i//10)+chr(96+j%10)+chr(58-j//10)+(chr(pr).lower() if pr else '')
+ return '%c%c%c%c'%(i%10+96,58-i//10,j%10+96,58-j//10)+(chr(pr).lower() if pr else '')
 def p(a,d):
- return json.load(urllib.request.urlopen(EU+a,json.dumps(d).encode()))
+ return json.load(urllib.request.urlopen(os.environ['MAKEFUN_ENV_URL']+a,json.dumps(d).encode()))
 while 1:
  g=p('/game',{})
  if g['status']=='done':break
